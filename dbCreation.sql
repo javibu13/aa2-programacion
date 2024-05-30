@@ -5,7 +5,7 @@ CREATE TABLE Usuario (
     Correo VARCHAR(255) NOT NULL,
     Password VARCHAR(40) NOT NULL,  -- SHA1 produce una cadena de 40 caracteres
     AvatarPath VARCHAR(255) NULL,
-    Rol ENUM('Administrador', 'Usuario') NOT NULL,
+    Rol VARCHAR(20) NOT NULL, -- Rol del usuario (Admin, Usuario)
 
     CONSTRAINT PK_Usuario PRIMARY KEY (Id),
     CONSTRAINT UQ_Correo UNIQUE (Correo)  -- Asegurarse que el correo sea único
@@ -26,7 +26,7 @@ CREATE TABLE Elemento (
     Id INT AUTO_INCREMENT,
     ProductoId VARCHAR(50) NOT NULL,
     NumSerie VARCHAR(255) NOT NULL,
-    Estado ENUM('Bueno', 'Regular', 'Malo') NOT NULL,
+    Estado VARCHAR(20) NOT NULL, -- Estado del elemento (Bueno, Regular, Malo)
 
     CONSTRAINT PK_Elemento PRIMARY KEY (Id),
     CONSTRAINT UQ_ProductoId_NumSerie UNIQUE (ProductoId, NumSerie),  -- Combinación única de Producto y NumSerie
