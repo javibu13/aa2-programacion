@@ -4,7 +4,7 @@ services:
   mysql:
     image: mysql:latest
     env_file:
-      - .env
+      - ./env
     volumes:
       - ./dbCreation.sql:/docker-entrypoint-initdb.d/dbCreation.sql
       - data:/var/lib/mysql

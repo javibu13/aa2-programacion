@@ -47,7 +47,7 @@
 <body>
     <header class="mb-5 mt-3">
         <div class="text-center">
-            <h1 class="display-1"><a href="login" class="no-link"><i class="bi bi-camera-reels-fill"></i> GESTOR DE EPI</a></h1>
+            <h1 class="display-1"><a href="login" class="no-link"><i class="bi bi-cone-striped"></i> GESTOR DE EPI <i class="bi bi-hammer"></i></a></h1>
         </div>
     </header>
     <main class="row">

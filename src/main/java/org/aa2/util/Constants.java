@@ -3,7 +3,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 public class Constants {
 
-    public static final Dotenv dotenv = Dotenv.load();
+    public static final Dotenv dotenv = Dotenv.configure().filename("env").directory("./").load();
 
     public static final String DATABASE = dotenv.get("MYSQL_DATABASE");
     public static final String USERNAME = dotenv.get("MYSQL_USER");
