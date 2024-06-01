@@ -37,7 +37,6 @@ public class LoginServlet extends HttpServlet {
             });
 
             if (correoExists) {
-                System.out.println("TEEEEEEEEEEEEEEEEST");
                 Usuario usuarioFromDB = Database.getInstance().withExtension(UsuarioDao.class, usuarioDao -> {
                     return usuarioDao.getUsuarioByCorreo(correo);
                 });
@@ -48,6 +47,7 @@ public class LoginServlet extends HttpServlet {
 
                     HttpSession session = request.getSession(true);
                     session.setAttribute("idUsuario", usuarioFromDB.getId());
+                    session.setAttribute("rolUsuario", usuarioFromDB.getRol());
                 } else {
                     response.setStatus(HttpServletResponse.SC_CONFLICT);
                     response.getWriter().write("Contraseña incorrecta");

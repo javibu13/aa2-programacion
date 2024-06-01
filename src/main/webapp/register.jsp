@@ -48,7 +48,7 @@
 <body>
     <header class="mb-5 mt-3">
         <div class="text-center">
-            <h1 class="display-1"><a href="login" class="no-link"><i class="bi bi-camera-reels-fill"></i> Desengaño 21</a></h1>
+            <h1 class="display-1"><a href="login" class="no-link"><i class="bi bi-cone-striped"></i> GESTOR DE EPI <i class="bi bi-hammer"></i></a></h1>
         </div>
     </header>
     <main class="row">
@@ -57,7 +57,7 @@
                 <form action="register" method="post">
                     <div class="form-group mb-3">
                         <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" required>
+                        <input type="text" class="form-control" id="firstName" name="nombre" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="correo">Correo</label>

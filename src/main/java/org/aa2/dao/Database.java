@@ -13,6 +13,10 @@ public class Database {
         if (jdbi == null) {
             jdbi = Jdbi.create(CONNECTION_STRING, USERNAME, PASSWORD);
             jdbi.installPlugin(new SqlObjectPlugin());
+            jdbi.registerRowMapper(new UsuarioMapper());
+            jdbi.registerRowMapper(new AsignacionMapper());
+            jdbi.registerRowMapper(new ElementoMapper());
+            jdbi.registerRowMapper(new ProductoMapper());
         }
         return jdbi;
     }

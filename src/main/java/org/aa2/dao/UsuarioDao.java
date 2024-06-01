@@ -12,6 +12,9 @@ public interface UsuarioDao {
     @SqlQuery("SELECT * FROM Usuario")
     List<Usuario> getAllUsuarios();
 
+    @SqlQuery("SELECT COUNT(*) FROM Usuario")
+    int getUsuariosCount();
+
     @SqlQuery("SELECT * FROM Usuario WHERE Id = :id")
     Usuario getUsuarioById(@Bind("id") int id);
 

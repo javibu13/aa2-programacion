@@ -14,7 +14,7 @@ public class LogoutServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             session.invalidate();
-            response.sendRedirect("/AA2");
+            response.sendRedirect("/aa2");
         } catch (Exception e) {
             e.printStackTrace();
             throw new ServletException("Error loading login view", e);

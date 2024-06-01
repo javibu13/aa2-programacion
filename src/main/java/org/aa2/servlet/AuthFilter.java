@@ -26,7 +26,7 @@ public class AuthFilter implements Filter {
 
         if (loggedIn || loginRequest || registerRequest || staticResource /*|| registerjspRequest*/) {
             if (loggedIn && (loginRequest || registerRequest)) {
-                ((HttpServletResponse) response).sendRedirect("home");
+                ((HttpServletResponse) response).sendRedirect("productos");
             } else if (loggedIn && req.getRequestURI().equals("/aa2/")) {
                 ((HttpServletResponse) response).sendRedirect("login");
             } else {
