@@ -5,13 +5,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
 
 import java.io.IOException;
+import java.security.MessageDigest;
 
 import org.aa2.dao.Database;
 import org.aa2.dao.UsuarioDao;
-import org.aa2.domain.Usuario;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
@@ -29,6 +28,7 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html; charset=UTF-8");
         String nombre = request.getParameter("nombre");
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
@@ -37,10 +37,22 @@ public class RegisterServlet extends HttpServlet {
             boolean correoExists = Database.getInstance().withExtension(UsuarioDao.class, usuarioDao -> {
                 return usuarioDao.correoExists(correo);
             });
+
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            byte[] hashedBytes = messageDigest.digest(nombre.getBytes());
+            // Convert the byte array into a hexadecimal string
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashedBytes) {
+                sb.append(String.format("%02x", b));
+            }
+            String hashedNombre = sb.toString();
             
             if (correoExists) {
                 response.setStatus(HttpServletResponse.SC_CONFLICT);
                 response.getWriter().write("Correo ya registrado");
+            } else if (hashedNombre.equals(contrasena)) {
+                response.setStatus(HttpServletResponse.SC_CONFLICT);
+                response.getWriter().write("La contraseña no puede ser igual al nombre");
             } else {
                 boolean primerUsuario = Database.getInstance().withExtension(UsuarioDao.class, usuarioDao -> {
                     return usuarioDao.getUsuariosCount() == 0;

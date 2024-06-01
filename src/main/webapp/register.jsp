@@ -20,9 +20,9 @@
             const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
             const formDataTmp = $(this).serialize();
-            console.log(formDataTmp);
+            // console.log(formDataTmp);
             const formData = formDataTmp.split("contrasena=")[0] + "contrasena=" + hashHex;
-            console.log(formData);
+            // console.log(formData);
             $.ajax("register", {
                 type: "POST",
                 data: formData,
@@ -35,7 +35,8 @@
                 },
                 error: function(xhr) {
                     if (xhr.status === 409) {
-                        $("#result").html("<div class='alert alert-danger' role='alert'>El email ya está en uso.</div>");
+                        console.log(xhr);
+                        $("#result").html("<div class='alert alert-danger' role='alert'>" + xhr.responseText + "</div>");
                     } else {
                         $("#result").html("<div class='alert alert-danger' role='alert'>Error durante el registro.</div>");
                     }
