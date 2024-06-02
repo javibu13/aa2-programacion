@@ -30,7 +30,7 @@ CREATE TABLE Elemento (
 
     CONSTRAINT PK_Elemento PRIMARY KEY (Id),
     CONSTRAINT UQ_ProductoId_NumSerie UNIQUE (ProductoId, NumSerie),  -- Combinación única de Producto y NumSerie
-    CONSTRAINT FK_Elemento_Producto FOREIGN KEY (ProductoId) REFERENCES Producto(Id)
+    CONSTRAINT FK_Elemento_Producto FOREIGN KEY (ProductoId) REFERENCES Producto(Id) ON DELETE CASCADE
 );
 
 -- Tabla Asignacion
@@ -42,6 +42,6 @@ CREATE TABLE Asignacion (
     FechaDevolucion DATE NULL,
 
     CONSTRAINT PK_Asignacion PRIMARY KEY (Id),
-    CONSTRAINT FK_Asignacion_Elemento FOREIGN KEY (ElementoId) REFERENCES Elemento(Id),
-    CONSTRAINT FK_Asignacion_Usuario FOREIGN KEY (UsuarioId) REFERENCES Usuario(Id)
+    CONSTRAINT FK_Asignacion_Elemento FOREIGN KEY (ElementoId) REFERENCES Elemento(Id) ON DELETE CASCADE,
+    CONSTRAINT FK_Asignacion_Usuario FOREIGN KEY (UsuarioId) REFERENCES Usuario(Id) ON DELETE CASCADE
 );
