@@ -26,4 +26,10 @@ public interface ProductoDao {
 
     @SqlUpdate("DELETE FROM Producto WHERE Id = :id")
     void removeProducto(@Bind("id") String id);
+
+    @SqlQuery("SELECT COUNT(*) FROM Producto WHERE Id = :id")
+    boolean idExists(@Bind("id") String id);
+
+    @SqlQuery("SELECT COUNT(*) FROM Producto WHERE Nombre = :nombre")
+    boolean nombreExists(@Bind("nombre") String nombre);
 }

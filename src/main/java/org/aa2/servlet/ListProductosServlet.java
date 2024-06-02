@@ -28,4 +28,5 @@ public class ListProductosServlet  extends HttpServlet {
             throw new ServletException("Error obteniendo productos", e);
         }
         }
-    }
+        
+}
