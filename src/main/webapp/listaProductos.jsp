@@ -86,7 +86,7 @@
     $(document).ready(function() {
         $('#crearNuevoForm').submit(function(event) {
             event.preventDefault();
-            const formData = $(this).serialize();
+            const formData = "action=create&"+$(this).serialize();
             $.ajax("producto", {
                 type: "POST",
                 data: formData,
