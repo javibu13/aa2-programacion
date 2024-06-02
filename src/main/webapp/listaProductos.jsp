@@ -19,10 +19,10 @@
         </div>
     </div>
 
-    <table class="" data-toggle="table" data-pagination="true" data-sortable="true"> <!-- data-search="true" data-search-highlight="true"  -->
+    <table id="productosTable" class="" data-toggle="table" data-pagination="true" data-sortable="true"> <!-- data-search="true" data-search-highlight="true"  -->
         <thead class="table-dark">
         <tr>
-            <th data-align="center" data-halign="center" data-sortable="true" data-field="id">Id</th>
+            <th data-align="center" data-halign="center" data-sortable="true" data-field="id" data-formatter="idFormatter">Id</th>
             <th data-align="center" data-halign="center" data-sortable="true" data-field="nombre">Nombre</th>
             <th                     data-halign="center" data-sortable="false" data-field="descripcion">Descripción</th>
             <th data-align="center" data-halign="center" data-sortable="false" data-field="limiteUso">Límite de uso (meses)</th>
@@ -32,7 +32,7 @@
         <tbody>
         <c:forEach var="producto" items="${productos}">
             <tr>
-                <td><a href="${pageContext.request.contextPath}/producto?id=${producto.id}">${producto.id}</a></td>
+                <td>${producto.id}</td> <!-- <a href="${pageContext.request.contextPath}/producto?id=${producto.id}">${producto.id}</a> FORMATEADO CON BOOTSTRAP TABLE -->
                 <td>${producto.nombre}</td>
                 <td>${producto.descripcion}</td>
                 <td>${producto.limiteUso}</td>
@@ -106,6 +106,29 @@
                     }
                 }
             });
+        });
+    });
+</script>
+
+<script>
+    function idFormatter(value) {
+        return '<a href="${pageContext.request.contextPath}/producto?id=' + value + '">' + value + '</a>';
+    }
+
+    $(document).ready(function() {
+        $('#searchInput').on('keyup', function() {
+            const value = $(this).val();
+            $.ajax("productos", {
+                type: "POST",
+                data: {search: value},
+                success: function(response) {
+                    $("#productosTable").bootstrapTable('load', response);
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+            
         });
     });
 </script>

@@ -15,6 +15,9 @@ public interface ProductoDao {
     @SqlQuery("SELECT p.*, COUNT(e.Id) as numElementos FROM Producto as p LEFT JOIN Elemento as e ON p.Id = e.ProductoId GROUP BY p.Id ORDER BY p.Id DESC")
     List<Producto> getAllProductosCountElementos();
 
+    @SqlQuery("SELECT * FROM Producto WHERE Id LIKE CONCAT('%', :filtro, '%') OR Nombre LIKE CONCAT('%', :filtro, '%')")
+    List<Producto> getProductosByFilter(@Bind("filtro") String filtro);
+
     @SqlQuery("SELECT * FROM Producto WHERE Id = :id")
     Producto getProductoById(@Bind("id") String id);
 

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import com.google.gson.Gson;
 
 @WebServlet("/productos")
 public class ListProductosServlet  extends HttpServlet {
@@ -28,4 +29,21 @@ public class ListProductosServlet  extends HttpServlet {
             throw new ServletException("Error obteniendo productos", e);
         }
     }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        String filtro = request.getParameter("search");
+        try {
+            List<Producto> productosFiltrados = Database.getInstance().withExtension(ProductoDao.class, productoDao -> productoDao.getProductosByFilter(filtro));
+            String jsonResponse = new Gson().toJson(productosFiltrados);
+            response.getWriter().write(jsonResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"error\": \"Error obteniendo productos\"}");
+        }
+    }
+
 }
