@@ -26,3 +26,11 @@ img.fixed-table-image-size {
 img.fixed-details-image-size {
     width: 100%;
 }
+
+#nav-header ul {
+    flex-direction: inherit;
+    
+    li {
+        margin: 0 10px;
+    }
+}

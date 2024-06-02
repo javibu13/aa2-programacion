@@ -12,4 +12,5 @@ public class Producto {
     private String nombre;
     private String descripcion;
     private int limiteUso;
+    private int numElementos;
 }

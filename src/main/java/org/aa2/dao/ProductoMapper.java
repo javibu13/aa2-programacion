@@ -10,11 +10,18 @@ import java.sql.SQLException;
 public class ProductoMapper implements RowMapper<Producto> {
     @Override
     public Producto map(ResultSet rs, StatementContext ctx) throws SQLException {
+        int numElementos;
+        try {
+            numElementos = rs.getInt("numElementos");
+        } catch (SQLException e) {
+            numElementos = 0;
+        }
         return new Producto(
                 rs.getString("Id"),
                 rs.getString("Nombre"),
                 rs.getString("Descripcion"),
-                rs.getInt("LimiteUso")
+                rs.getInt("LimiteUso"),
+                numElementos
         );
     }
 }
