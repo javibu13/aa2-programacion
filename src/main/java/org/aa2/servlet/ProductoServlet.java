@@ -23,7 +23,7 @@ public class ProductoServlet  extends HttpServlet {
             request.setAttribute("producto", producto);
             String stringStaticPath = request.getContextPath() + "/static/";
             request.setAttribute("staticPath", stringStaticPath);
-            request.getRequestDispatcher("/DetalleProducto.jsp").forward(request, response);
+            request.getRequestDispatcher("/detalleProducto.jsp").forward(request, response);
         } catch (Exception e){
             e.printStackTrace();
             throw new ServletException("Error obteniendo productos", e);
@@ -87,7 +87,7 @@ public class ProductoServlet  extends HttpServlet {
                 boolean nombreExists = Database.getInstance().withExtension(ProductoDao.class, productoDao -> {
                     return productoDao.nombreExists(nombre);
                 });
-                
+
                 if (!idExists) {
                     response.setStatus(HttpServletResponse.SC_CONFLICT);
                     response.getWriter().write("No existe un producto con ese Id");
