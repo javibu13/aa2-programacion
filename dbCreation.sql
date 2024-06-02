@@ -5,7 +5,7 @@ CREATE TABLE Usuario (
     Correo VARCHAR(255) NOT NULL,
     Password VARCHAR(40) NOT NULL,  -- SHA1 produce una cadena de 40 caracteres
     AvatarPath VARCHAR(255) NULL,
-    Rol VARCHAR(20) NOT NULL, -- Rol del usuario (Admin, Usuario)
+    Rol VARCHAR(20) NOT NULL, -- Rol del usuario (Administrador, Usuario)
 
     CONSTRAINT PK_Usuario PRIMARY KEY (Id),
     CONSTRAINT UQ_Correo UNIQUE (Correo)  -- Asegurarse que el correo sea único
