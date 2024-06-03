@@ -15,7 +15,9 @@ public class AsignacionMapper implements RowMapper<Asignacion> {
                 rs.getInt("ElementoId"),
                 rs.getInt("UsuarioId"),
                 rs.getDate("FechaAsignacion"),
-                rs.getDate("FechaDevolucion")
+                rs.getDate("FechaDevolucion"),
+                null,
+                null
         );
     }
 }
