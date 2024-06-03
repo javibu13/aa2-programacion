@@ -38,6 +38,13 @@ public class ElementoServlet  extends HttpServlet {
         
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String rolUsuario = (String) request.getSession().getAttribute("rolUsuario");
+        if (rolUsuario == null || !rolUsuario.equals("Administrador")) {
+            response.setContentType("text/html; charset=UTF-8");
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+            response.getWriter().write("Solo los administradores pueden realizar esta acción");
+            return;
+        }
         if (request.getParameter("action").equals("create")) {
             // CREATE
             response.setContentType("text/html; charset=UTF-8");
