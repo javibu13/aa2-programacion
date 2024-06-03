@@ -25,6 +25,9 @@ public interface ElementoDao {
 
     @SqlUpdate("UPDATE Elemento SET Estado = :estado WHERE Id = :id")
     void updateElementoEstado(@Bind("id") int id, @Bind("estado") String estado);
+
+    @SqlUpdate("UPDATE Elemento SET NumSerie = :numSerie, Estado = :estado WHERE Id = :id")
+    void updateElementoNumSerieEstado(@Bind("id") int id, @Bind("numSerie") String numSerie, @Bind("estado") String estado);
     
     @SqlUpdate("DELETE FROM Elemento WHERE Id = :id")
     void removeElemento(@Bind("id") int id);

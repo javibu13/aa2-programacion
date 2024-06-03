@@ -7,27 +7,43 @@
 <main class="row">
     <div class="col-12 col-sm-9 col-md-8 m-auto">
         <div class="panel mt-4">
-            <h1 class="text-center">Detalle de Producto</h1>
-            <form id="modificarForm" action="producto" method="put">
+            <h1 class="text-center">Detalle de Elemento</h1>
+            <form id="modificarForm" action="elemento" method="put">
                 <div class="mb-3">
                     <label for="id" class="form-label">Id:</label>
-                    <input type="text" id="id" name="id" value="${producto.id}" class="form-control" disabled required maxlength="50">
+                    <input type="text" id="id" name="id" value="${elemento.id}" class="form-control" disabled required maxlength="50">
                 </div>
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" value="${producto.nombre}" class="form-control" required maxlength="255">
+                    <label for="productoId" class="form-label">Producto Id:</label>
+                    <input type="text" id="productoId" name="productoId" value="${producto.id}" class="form-control" disabled required maxlength="50">
                 </div>
                 <div class="mb-3">
-                    <label for="descripcion" class="form-label">Descripcion:</label>
-                    <textarea type="text" id="descripcion" name="descripcion" class="form-control" required maxlength="500">${producto.descripcion}</textarea>
+                    <label for="productonombre" class="form-label">Producto Nombre:</label>
+                    <input type="text" id="productonombre" name="productonombre" value="${producto.nombre}" class="form-control" disabled required maxlength="255">
                 </div>
                 <div class="mb-3">
-                    <label for="limiteUso" class="form-label">Límite de uso:</label>
-                    <input type="text" id="limiteUso" name="limiteUso" value="${producto.limiteUso}" class="form-control" required>
+                    <label for="numSerie" class="form-label">Número de serie:</label>
+                    <input type="text" id="numSerie" name="numSerie" value="${elemento.numSerie}" class="form-control" required maxlength="255">
                 </div>
                 <div class="mb-4">
-                    <label for="numElementos" class="form-label">Número de elementos de este tipo:</label>
-                    <input type="text" id="numElementos" name="numElementos" value="${producto.numElementos}" class="form-control" disabled required>
+                    <label for="estado" class="form-label">Estado:</label>
+                    <select id="estado" name="estado" class="form-control" required>
+                        <c:if test="${elemento.estado == 'Bueno'}">
+                            <option value="Bueno" selected>Bueno</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Malo">Malo</option>
+                        </c:if>
+                        <c:if test="${elemento.estado == 'Regular'}">
+                            <option value="Bueno">Bueno</option>
+                            <option value="Regular" selected>Regular</option>
+                            <option value="Malo">Malo</option>
+                        </c:if>
+                        <c:if test="${elemento.estado == 'Malo'}">
+                            <option value="Bueno">Bueno</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Malo" selected>Malo</option>
+                        </c:if>
+                    </select>
                 </div>
                 <div id="reqResult"></div>
                 <div class="justify-content-end d-flex">
@@ -44,18 +60,18 @@
         $('#modificarForm').submit(function(event) {
             event.preventDefault();
             
-            if (!window.confirm("¿Está seguro de que desea actualizar el producto?")) {
+            if (!window.confirm("¿Está seguro de que desea actualizar el elemento?")) {
                 return;
             }
 
-            const formData = "action=update&"+$(this).serialize()+"&id=${producto.id}";
+            const formData = "action=update&"+$(this).serialize()+"&id=${elemento.id}&productoId=${producto.id}";
             console.log(formData);
-            $.ajax("producto", {
+            $.ajax("elemento", {
                 type: "POST",
                 data: formData,
                 success: function(response) {
                     if (response === "success") {
-                        window.location.href = "/aa2/productos";
+                        window.location.href = "/aa2/elementos";
                     } else {
                         $("#reqResult").html("<div class='alert alert-danger' role='alert'>" + response + "</div>");
                     }
@@ -72,15 +88,15 @@
         });
 
         $('#eliminarButton').click(function() {
-            if (!window.confirm("¿Está seguro de que desea eliminar el producto?")) {
+            if (!window.confirm("¿Está seguro de que desea eliminar el elemento?")) {
                 return;
             }
-            $.ajax("producto", {
+            $.ajax("elemento", {
                 type: "POST",
-                data: "action=delete&id=${producto.id}",
+                data: "action=delete&id=${elemento.id}",
                 success: function(response) {
                     if (response === "success") {
-                        window.location.href = "/aa2/productos";
+                        window.location.href = "/aa2/elementos";
                     } else {
                         $("#reqResult").html("<div class='alert alert-danger' role='alert'>" + response + "</div>");
                     }

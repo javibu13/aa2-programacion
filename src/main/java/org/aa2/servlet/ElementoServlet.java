@@ -4,6 +4,7 @@ import org.aa2.dao.Database;
 import org.aa2.dao.ElementoDao;
 import org.aa2.dao.ProductoDao;
 import org.aa2.domain.Elemento;
+import org.aa2.domain.Producto;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +22,11 @@ public class ElementoServlet  extends HttpServlet {
             Elemento elemento = Database.getInstance().withExtension(ElementoDao.class, elementoDao -> {
                 return elementoDao.getElementoById(Integer.parseInt(request.getParameter("id")));
             });
+            Producto producto = Database.getInstance().withExtension(ProductoDao.class, productoDao -> {
+                return productoDao.getProductoById(elemento.getProductoId());
+            });
             request.setAttribute("elemento", elemento);
+            request.setAttribute("producto", producto);
             String stringStaticPath = request.getContextPath() + "/static/";
             request.setAttribute("staticPath", stringStaticPath);
             request.getRequestDispatcher("/detalleElemento.jsp").forward(request, response);
@@ -72,21 +77,37 @@ public class ElementoServlet  extends HttpServlet {
             // UPDATE
             response.setContentType("text/html; charset=UTF-8");
             int id = Integer.parseInt(request.getParameter("id"));
+            String productoId = request.getParameter("productoId");
+            String numSerie = request.getParameter("numSerie");
             String estado = request.getParameter("estado");
 
             try {
                 boolean idExists = Database.getInstance().withExtension(ElementoDao.class, elementoDao -> {
                     return elementoDao.idExists(id);
                 });
-                if (!idExists) {
+                boolean productoIdExists = Database.getInstance().withExtension(ProductoDao.class, productoDao -> {
+                    return productoDao.idExists(productoId);
+                });
+                boolean numSerieForProductIdExists = Database.getInstance().withExtension(ElementoDao.class, elementoDao -> {
+                    return elementoDao.numSerieForProductIdExists(productoId, numSerie);
+                });
+                if (!productoIdExists) {
+                    response.setStatus(HttpServletResponse.SC_CONFLICT);
+                    response.getWriter().write("No existe un producto con ese Id");
+                } else if (!idExists) {
                     response.setStatus(HttpServletResponse.SC_CONFLICT);
                     response.getWriter().write("No existe un elemento con ese Id");
+                } else if (numSerieForProductIdExists && !Database.getInstance().withExtension(ElementoDao.class, elementoDao -> {
+                    return elementoDao.getElementoById(id).getNumSerie().equals(numSerie);
+                })) {
+                    response.setStatus(HttpServletResponse.SC_CONFLICT);
+                    response.getWriter().write("Ya existe un elemento con ese Número de Serie para ese Producto");
                 } else if (!estado.equals("Bueno") && !estado.equals("Regular") && !estado.equals("Malo")) {
                     response.setStatus(HttpServletResponse.SC_CONFLICT);
                     response.getWriter().write("El estado debe ser 'Bueno', 'Regular' o 'Malo'");
                 } else {
                     Database.getInstance().withExtension(ElementoDao.class, elementoDao -> {
-                        elementoDao.updateElementoEstado(id, estado);
+                        elementoDao.updateElementoNumSerieEstado(id, numSerie, estado);
                         return null;
                     });
                     response.setStatus(HttpServletResponse.SC_OK);
