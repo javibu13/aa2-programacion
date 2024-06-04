@@ -22,10 +22,10 @@
                 <div class="justify-content-end" id="navbarNavEnd">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/aa2/profile">Profile</a>
+                            <a class="nav-link" href="/aa2/perfil">Perfil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/aa2/logout">Logout</a>
+                            <a class="nav-link" href="/aa2/logout">Cerrar sesión</a>
                         </li>
                     </ul>
                 </div>
