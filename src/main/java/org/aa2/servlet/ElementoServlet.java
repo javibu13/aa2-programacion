@@ -34,7 +34,7 @@ public class ElementoServlet  extends HttpServlet {
             e.printStackTrace();
             throw new ServletException("Error obteniendo elementos", e);
         }
-        }
+    }
         
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

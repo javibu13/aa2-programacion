@@ -28,7 +28,7 @@ public class ProductoServlet  extends HttpServlet {
             e.printStackTrace();
             throw new ServletException("Error obteniendo productos", e);
         }
-        }
+    }
         
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

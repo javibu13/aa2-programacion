@@ -30,7 +30,7 @@ public class UsuarioServlet  extends HttpServlet {
             e.printStackTrace();
             throw new ServletException("Error obteniendo usuarios", e);
         }
-        }
+    }
         
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
