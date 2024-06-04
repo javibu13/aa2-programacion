@@ -33,6 +33,9 @@ public interface UsuarioDao {
     @SqlUpdate("UPDATE Usuario SET Nombre = :nombre, Correo = :correo, Rol = :rol WHERE Id = :id")
     void updateUsuarioNoPass(@Bind("id") int id, @Bind("nombre") String nombre, @Bind("correo") String correo, @Bind("rol") String rol);
 
+    @SqlUpdate("UPDATE Usuario SET password = :password WHERE Id = :id")
+    void updateUsuarioPass(@Bind("id") int id, @Bind("password") String password);
+
     @SqlUpdate("DELETE FROM Usuario WHERE Id = :id")
     void removeUsuario(@Bind("id") int id);
 
@@ -41,4 +44,7 @@ public interface UsuarioDao {
 
     @SqlQuery("SELECT COUNT(*) FROM Usuario WHERE Id = :id")
     boolean idExists(@Bind("id") int id);
+
+    @SqlQuery("SELECT COUNT(*) FROM Usuario WHERE Id = :id AND Password = :password")
+    boolean checkPassword(@Bind("id") int id, @Bind("password") String password);
 }
